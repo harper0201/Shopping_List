@@ -36,13 +36,16 @@ public class MainActivity extends AppCompatActivity {
     class MyOnClikerListener implements View.OnClickListener{
         @Override
         public void onClick(View view){
-            if(input.getText().toString().isEmpty() == false){
+            if(input.getText().length()!=0){
                 int current_position = Myadapter.getItemCount();
                 List.add(current_position,new item(input.getText().toString()));
-                input.setText(" ");
+                input.getText().clear();
                 Myadapter.notifyDataSetChanged();
             }
-        }
+            else{
+                Toast.makeText(MainActivity.this,"empty input",Toast.LENGTH_LONG).show();
+            }
+            }
     }
 
 
