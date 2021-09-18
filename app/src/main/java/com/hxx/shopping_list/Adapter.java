@@ -1,5 +1,6 @@
 package com.hxx.shopping_list;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
     }
 
     public Adapter(ArrayList<item> list){
-        MyList = list;
+        this.MyList = list;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
