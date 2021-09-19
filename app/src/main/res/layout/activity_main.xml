@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
+    <!--creating a EditText for user input-->
     <EditText
         android:id="@+id/new_item"
         android:layout_width="250dp"
@@ -15,6 +14,7 @@
         android:hint="Please enter the new item"
         android:layout_alignParentTop="true" />
 
+    <!--creating a button for user to add a new item-->
     <Button
         android:id="@+id/add"
         android:layout_width="120dp"
@@ -28,6 +28,7 @@
         android:textColor="@color/black"
         android:textSize="15dp" />
 
+    <!--creating a recycler view for displaying our list of items-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
