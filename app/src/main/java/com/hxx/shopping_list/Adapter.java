@@ -18,13 +18,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
     public Adapter(ArrayList<item> list){
         this.MyList = list;
     }
+
     //ViewHolder class to handle recycler view
     public static class ViewHolder extends RecyclerView.ViewHolder{
         //initialize our itemview
         public TextView MyTextview;
+
         public ViewHolder(View itemView){
             super(itemView);
             MyTextview = itemView.findViewById(R.id.title);
+
         }
     }
 

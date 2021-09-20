@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ClipData;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView MyRecyclerview;
@@ -40,10 +42,14 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new MyOnClikerListener());
         //creating a method to create item touch helper method for adding swipe to delete functionality.
         //we are specifying drag direction and position to right
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN|ItemTouchHelper.START|ItemTouchHelper.END, ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
+                int from_position = viewHolder.getAbsoluteAdapterPosition();
+                int end_position = target.getAbsoluteAdapterPosition();
+                Collections.swap(List, from_position, end_position);
+                Myadapter.notifyItemMoved(from_position,end_position);
+                return true;
             }
 
             @Override
@@ -69,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             }
             //add this to our recycler view.
         }).attachToRecyclerView(MyRecyclerview);
+
     }
 
     class MyOnClikerListener implements View.OnClickListener{
