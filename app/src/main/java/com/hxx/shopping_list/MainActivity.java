@@ -1,5 +1,6 @@
 package com.hxx.shopping_list;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -7,7 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +20,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView MyRecyclerview;
@@ -25,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<item>List;
     private Button add;
     private EditText input;
+    private Button email;
+    private EditText email_id;
 
 
 
@@ -40,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         input = findViewById(R.id.new_item);
         //add on click listener to our add button
         add.setOnClickListener(new MyOnClikerListener());
+
+        email = findViewById(R.id.email);
+        email_id = findViewById(R.id.email_id);
+        email.setOnClickListener(new MySecondOnClikerListener());
+
         //creating a method to create item touch helper method for adding swipe to delete functionality.
         //we are specifying drag direction and position to right
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN|ItemTouchHelper.START|ItemTouchHelper.END, ItemTouchHelper.RIGHT) {
@@ -49,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 int end_position = target.getAbsoluteAdapterPosition();
                 Collections.swap(List, from_position, end_position);
                 Myadapter.notifyItemMoved(from_position,end_position);
-                return true;
+                return false;
             }
 
             @Override
@@ -96,6 +108,31 @@ public class MainActivity extends AppCompatActivity {
             }
     }
 
+    class MySecondOnClikerListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            String receiver = email_id.getText().toString();
+            if(receiver.length()!=0){
+                Intent send = new Intent(Intent.ACTION_SEND);
+                send.setType("text/plain");
+                send.putExtra(Intent.EXTRA_EMAIL,new String[] {receiver});
+                Date currentTime = Calendar.getInstance().getTime();
+                String subject = "Shopping List" + "(" + currentTime.toString() + ")";
+                send.putExtra(Intent.EXTRA_SUBJECT,subject);
+                String result = List.get(0).getText()+"\n";
+                for(int j = 1; j < List.size(); j++){
+                    result = result + List.get(j).getText()+"\n";
+                }
+                send.putExtra(Intent.EXTRA_TEXT, result);
+                try{
+                    startActivity(Intent.createChooser(send,"Choose an Email client"));
+                }catch (android.content.ActivityNotFoundException ex){
+                    Toast.makeText(MainActivity.this,"There is no email client installed",Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }
+    }
     public void BuildRecycleView(){
         MyRecyclerview = findViewById(R.id.recyclerview);
         MyRecyclerview.setHasFixedSize(true);

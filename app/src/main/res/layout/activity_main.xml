@@ -10,9 +10,9 @@
         android:id="@+id/new_item"
         android:layout_width="250dp"
         android:layout_height="70dp"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="12dp"
-        android:hint="Please enter the new item"
-        android:layout_alignParentTop="true" />
+        android:hint="Please enter the new item" />
 
     <!--creating a button for user to add a new item-->
     <Button
@@ -29,11 +29,58 @@
         android:textSize="15dp" />
 
     <!--creating a recycler view for displaying our list of items-->
+
+    <!--Edit text for email id-->
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/new_item"
+        android:layout_marginTop="-3dp"
         android:padding="4dp"
         android:scrollbars="vertical" />
+
+    <EditText
+        android:id="@+id/email_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/email"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="593dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="13dp"
+        android:layout_toEndOf="@+id/send_to"
+        android:hint="please enter your email address" />
+
+    <TextView
+        android:id="@+id/send_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/email"
+        android:layout_alignTop="@+id/email"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="-48dp"
+        android:layout_marginBottom="-2dp"
+        android:text="Send:"
+        android:textColor="@color/black"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:text="email"
+        android:textColor="@color/black"
+        android:textSize="15dp" />
+
+
 </RelativeLayout>
