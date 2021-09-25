@@ -5,10 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <!--creating a EditText for user input-->
+
+    <!--creating a area for new item-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <!--creating a EditText for user input-->
         <EditText
             android:id="@+id/new_item"
             android:layout_width="250dp"
@@ -31,10 +34,8 @@
             android:textColor="@color/black"
             android:textSize="15dp" />
     </LinearLayout>
+
     <!--creating a recycler view for displaying our list of items-->
-
-    <!--Edit text for email id-->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="450dp"
@@ -51,11 +52,11 @@
             tools:ignore="NotSibling" />
     </RelativeLayout>
 
-
+    <!--creating a area for email-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+        <!--creating a EditText for user input-->
         <EditText
             android:id="@+id/email_id"
             android:layout_width="250dp"
@@ -67,6 +68,7 @@
             android:layout_toLeftOf="@+id/email"
             android:hint="please enter your email " />
 
+        <!--creating a button for user to add a new item-->
         <Button
             android:id="@+id/email"
             android:layout_width="120dp"

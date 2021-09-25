@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN|ItemTouchHelper.START|ItemTouchHelper.END, ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                // get the position and exchange date
                 int from_position = viewHolder.getAbsoluteAdapterPosition();
                 int end_position = target.getAbsoluteAdapterPosition();
                 Collections.swap(List, from_position, end_position);
@@ -95,9 +96,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // press enter key to add a new item
     class MyKeyListener implements View.OnKeyListener{
         @Override
         public boolean onKey(View view, int keycode, KeyEvent keyEvent) {
+            // press down enter equals to click add button
             if(keyEvent.getAction() == ACTION_DOWN && keycode == KeyEvent.KEYCODE_ENTER){
                 add.callOnClick();
                 return true;
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //click to add a new item
     class MyOnClikerListener implements View.OnClickListener{
         @Override
         public void onClick(View view){
@@ -124,27 +128,39 @@ public class MainActivity extends AppCompatActivity {
             }
     }
 
+    //click to send email
     class MySecondOnClikerListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
+            // get the email address of user
             String receiver = email_id.getText().toString();
             if(receiver.length()!=0){
+                // sned email using intent
                 Intent send = new Intent(Intent.ACTION_SEND);
+                // set the datatype of email
                 send.setType("text/plain");
+                // set the receiver of email
                 send.putExtra(Intent.EXTRA_EMAIL,new String[] {receiver});
+                // get the time and set the subject of email
                 Date currentTime = Calendar.getInstance().getTime();
                 String subject = "Shopping List" + "(" + currentTime.toString() + ")";
                 send.putExtra(Intent.EXTRA_SUBJECT,subject);
+                // get the list and store the data in a string
                 String result = List.get(0).getText()+"\n";
                 for(int j = 1; j < List.size(); j++){
                     result = result + List.get(j).getText()+"\n";
                 }
+                // send email
                 send.putExtra(Intent.EXTRA_TEXT, result);
+                // start activity of sending email and do some error checking
                 try{
                     startActivity(Intent.createChooser(send,"Choose an Email client"));
                 }catch (android.content.ActivityNotFoundException ex){
                     Toast.makeText(MainActivity.this,"There is no email client installed",Toast.LENGTH_LONG).show();
                 }
+            }
+            else{
+                Toast.makeText(MainActivity.this,"Empty input!!",Toast.LENGTH_LONG).show();
             }
         }
     }
