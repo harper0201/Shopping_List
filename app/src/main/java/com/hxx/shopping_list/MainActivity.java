@@ -1,5 +1,7 @@
 package com.hxx.shopping_list;
 
+import static android.view.KeyEvent.ACTION_DOWN;
+
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +13,9 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         add = findViewById(R.id.add);
         input = findViewById(R.id.new_item);
         //add on click listener to our add button
+        input.setOnKeyListener(new MyKeyListener());
         add.setOnClickListener(new MyOnClikerListener());
 
         email = findViewById(R.id.email);
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 int remove_position = viewHolder.getAbsoluteAdapterPosition();
                 //remove item from our array list.
                 List.remove(remove_position);
-                //notify our item is removed from adapter
+                //notify item is removed from adapter
                 Myadapter.notifyItemRemoved(remove_position);
                 Snackbar.make(MyRecyclerview, delete_item.getText(), Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                     @Override
@@ -88,6 +93,17 @@ public class MainActivity extends AppCompatActivity {
             //add this to our recycler view.
         }).attachToRecyclerView(MyRecyclerview);
 
+    }
+
+    class MyKeyListener implements View.OnKeyListener{
+        @Override
+        public boolean onKey(View view, int keycode, KeyEvent keyEvent) {
+            if(keyEvent.getAction() == ACTION_DOWN && keycode == KeyEvent.KEYCODE_ENTER){
+                add.callOnClick();
+                return true;
+            }
+            return false;
+        }
     }
 
     class MyOnClikerListener implements View.OnClickListener{
@@ -130,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"There is no email client installed",Toast.LENGTH_LONG).show();
                 }
             }
-
         }
     }
     public void BuildRecycleView(){
